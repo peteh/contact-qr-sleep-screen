@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Sleep Screen Generator — Xteink X4</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="layout">
+
+    <aside class="sidebar">
+      <h1>QR Sleep Screen</h1>
+      <p class="subtitle">Xteink X4 · CrossInk Page Overlay</p>
+
+      <section>
+        <h2>Contact details</h2>
+        <div class="field-group">
+          <label for="f-name">Full name <span class="req">*</span></label>
+          <input type="text" id="f-name" placeholder="Pete Mustermann" autocomplete="name">
+        </div>
+        <div class="field-group">
+          <label for="f-phone">Phone</label>
+          <input type="tel" id="f-phone" placeholder="+49 170 1234567" autocomplete="tel">
+        </div>
+        <div class="field-group">
+          <label for="f-email">Email</label>
+          <input type="email" id="f-email" placeholder="pete@example.com" autocomplete="email">
+        </div>
+        <div class="field-group">
+          <label for="f-org">Company</label>
+          <input type="text" id="f-org" placeholder="ACME GmbH">
+        </div>
+        <div class="field-group">
+          <label for="f-title">Job title</label>
+          <input type="text" id="f-title" placeholder="Engineer">
+        </div>
+        <div class="field-group">
+          <label for="f-url">Website</label>
+          <input type="url" id="f-url" placeholder="https://example.com">
+        </div>
+      </section>
+
+      <section>
+        <h2>Appearance</h2>
+        <div class="field-group">
+          <label for="f-label">Label text</label>
+          <input type="text" id="f-label" placeholder="Scan to save contact" maxlength="40">
+        </div>
+        <div class="field-group">
+          <label for="f-qr-size">QR size <span id="qr-size-val">260</span>px</label>
+          <input type="range" id="f-qr-size" min="160" max="340" value="260" step="10">
+        </div>
+        <div class="field-group">
+          <label for="f-bottom-margin">Bottom margin <span id="bottom-margin-val">48</span>px</label>
+          <input type="range" id="f-bottom-margin" min="16" max="120" value="48" step="4">
+        </div>
+        <div class="field-group">
+          <label for="f-corner-radius">Corner radius <span id="corner-radius-val">20</span>px</label>
+          <input type="range" id="f-corner-radius" min="0" max="48" value="20" step="2">
+        </div>
+        <div class="field-group">
+          <label for="f-padding">QR padding <span id="padding-val">16</span>px</label>
+          <input type="range" id="f-padding" min="8" max="40" value="16" step="2">
+        </div>
+        <div class="field-group">
+          <label for="f-font-size">Name font size <span id="font-size-val">22</span>px</label>
+          <input type="range" id="f-font-size" min="14" max="36" value="22" step="1">
+        </div>
+      </section>
+
+      <div class="actions">
+        <button id="btn-download" class="primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download PNG (480×800)
+        </button>
+        <button id="btn-preview">Refresh preview</button>
+      </div>
+
+      <div class="instructions">
+        <h2>How to use</h2>
+        <ol>
+          <li>Fill in your contact details above</li>
+          <li>Download the PNG</li>
+          <li>Copy it into <code>.sleep/</code> on your SD card</li>
+          <li>In CrossInk: Settings → Display → Sleep Screen → <strong>Page overlay</strong></li>
+        </ol>
+        <p class="note">CrossInk's Page Overlay mode makes white areas transparent — your book page shows through, the QR code floats on top.</p>
+      </div>
+    </aside>
+
+    <main class="preview-area">
+      <div class="device-frame">
+        <div class="device-screen">
+          <div class="book-text-sim" aria-hidden="true" id="book-bg"></div>
+          <canvas id="out-canvas" width="480" height="800" aria-label="Sleep screen preview"></canvas>
+        </div>
+        <p class="frame-label">Preview at 50% · 480×800 actual output</p>
+      </div>
+    </main>
+
+  </div>
+
+  <div id="qr-scratch" aria-hidden="true"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
