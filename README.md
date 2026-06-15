@@ -15,12 +15,13 @@ This tool outputs a PNG with a QR box containing your contact details in the low
 
 ## Usage
 
-1. Select your device
-2. Fill in contact details
-3. Adjust size, margin, corner radius to taste
-4. Click **Download PNG**
-5. Copy the PNG into `/sleep/` on the devices's SD card (create the folder if it does not exist)
-6. On the device: Settings → Display → Sleep Screen → **Page overlay**
+1. Go to <https://qrcontact.kthxbye.us/>
+2. Select your device
+3. Fill in contact details
+4. Adjust size, margin, corner radius to taste
+5. Click **Download PNG**
+6. Copy the PNG into `/sleep/` on the devices's SD card (create the folder if it does not exist)
+7. On the device: Settings → Display → Sleep Screen → **Page overlay**
 
 ## vCard format
 
@@ -59,7 +60,8 @@ location /qr-sleep/ {
 ```
 
 **Caddy example:**
-```
+
+```caddy
 handle /qr-sleep/* {
     root * /var/www/qr-sleep
     file_server
