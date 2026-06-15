@@ -130,9 +130,8 @@ async function render() {
   const canvas = get('out-canvas');
   const ctx = canvas.getContext('2d');
 
-  // ── Full canvas: white (CrossInk makes white transparent in Page Overlay mode)
-  ctx.fillStyle = '#ffffff';
-  ctx.fillRect(0, 0, W, H);
+  // ── Clear canvas to transparent for preview
+  ctx.clearRect(0, 0, W, H);
 
   // ── Layout: QR box in lower third
   const subText    = [jobTitle, org].filter(Boolean).join(' · ');
@@ -193,7 +192,21 @@ async function downloadPNG() {
   await new Promise(r => setTimeout(r, 100)); // ensure render is flushed
 
   const canvas = get('out-canvas');
-  canvas.toBlob(blob => {
+  
+  // Create a new canvas with white background for export
+  const exportCanvas = document.createElement('canvas');
+  exportCanvas.width = W;
+  exportCanvas.height = H;
+  const exportCtx = exportCanvas.getContext('2d');
+  
+  // Fill with white for CrossInk overlay mode
+  exportCtx.fillStyle = '#ffffff';
+  exportCtx.fillRect(0, 0, W, H);
+  
+  // Draw the preview content on top
+  exportCtx.drawImage(canvas, 0, 0);
+  
+  exportCanvas.toBlob(blob => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     const safeName = (get('f-name').value.trim() || 'contact')
@@ -246,9 +259,18 @@ function changeDevice(deviceId) {
   get('device-label').textContent = device.name;
   get('btn-text').textContent = `Download PNG (${W}×${H})`;
   get('preview-label').textContent = `${W}×${H}`;
+  
+  // Update canvas dimensions (actual resolution)
   const canvas = get('out-canvas');
   canvas.width = W;
   canvas.height = H;
+  
+  // Update display size (50% scale)
+  const deviceScreen = document.querySelector('.device-screen');
+  const displayW = W / 2;
+  const displayH = H / 2;
+  deviceScreen.style.width = displayW + 'px';
+  deviceScreen.style.height = displayH + 'px';
   
   render();
 }
